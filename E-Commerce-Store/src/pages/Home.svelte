@@ -1,5 +1,9 @@
 <script>
     import ProductList from "../components/product/ProductList.svelte";
-</script>
-
-<ProductList/>
+    import FilterSort from "../components/FilterSort.svelte";
+  </script>
+  
+  <main>
+    <FilterSort />
+    <ProductList />
+  </main>
