@@ -1,58 +1,64 @@
-import { writable, derived } from 'svelte/store';
+import { writable, derived } from "svelte/store";
+import { filterSortStore } from "./DefaultSortFilter";
 
 function createProductStore() {
-  const { subscribe, set, update } = writable({
+  const { subscribe, update } = writable({
     products: [],
     categories: [],
     loading: false,
     error: null,
-    filter: '',
-    sort: ''
   });
 
   return {
     subscribe,
     fetchProducts: async () => {
-      update(store => ({ ...store, loading: true }));
+      update((store) => ({ ...store, loading: true }));
       try {
-        const response = await fetch('https://fakestoreapi.com/products');
-        if (!response.ok) throw new Error('Failed to fetch products');
+        const response = await fetch("https://fakestoreapi.com/products");
+        if (!response.ok) throw new Error("Failed to fetch products");
         const products = await response.json();
-        update(store => ({ ...store, products, loading: false, error: null }));
+        update((store) => ({
+          ...store,
+          products,
+          loading: false,
+          error: null,
+        }));
       } catch (error) {
-        update(store => ({ ...store, loading: false, error: error.message }));
+        update((store) => ({ ...store, loading: false, error: error.message }));
       }
     },
     fetchCategories: async () => {
       try {
-        const response = await fetch('https://fakestoreapi.com/products/categories');
-        if (!response.ok) throw new Error('Failed to fetch categories');
+        const response = await fetch(
+          "https://fakestoreapi.com/products/categories"
+        );
+        if (!response.ok) throw new Error("Failed to fetch categories");
         const categories = await response.json();
-        update(store => ({ ...store, categories }));
+        update((store) => ({ ...store, categories }));
       } catch (error) {
-        console.error('Failed to fetch categories:', error);
-        update(store => ({ ...store, error: error.message }));
+        console.error("Failed to fetch categories:", error);
+        update((store) => ({ ...store, error: error.message }));
       }
     },
-    setFilter: (category) => update(store => ({ ...store, filter: category })),
-    setSort: (sortOption) => update(store => ({ ...store, sort: sortOption })),
-    resetFilters: () => update(store => ({ ...store, filter: '', sort: '' }))
   };
 }
 
 export const productStore = createProductStore();
 
 export const filteredSortedProducts = derived(
-  productStore,
-  $store => {
-    let filteredProducts = $store.filter 
-      ? $store.products.filter(p => p.category === $store.filter)
-      : $store.products;
+  [productStore, filterSortStore],
+  ([$productStore, $filterSortStore]) => {
+    let filteredProducts = $filterSortStore.selectedCategory
+      ? $productStore.products.filter((p) => p.category === $filterSortStore.selectedCategory)
+      : $productStore.products;
 
-    if ($store.sort === 'lowToHigh') {
+    if ($filterSortStore.selectedSort === "lowToHigh") {
       filteredProducts.sort((a, b) => a.price - b.price);
-    } else if ($store.sort === 'highToLow') {
+    } else if ($filterSortStore.selectedSort === "highToLow") {
       filteredProducts.sort((a, b) => b.price - a.price);
+    } else {
+      // Default sorting: reset to original order
+      filteredProducts.sort((a, b) => a.id - b.id);
     }
 
     return filteredProducts;
