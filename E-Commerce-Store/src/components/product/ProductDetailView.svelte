@@ -25,10 +25,19 @@
       loading = false;
     }
   }
+
+  function backButton(){
+    window.history.back();
+  }
 </script>
 
 <div class="flex justify-center">
-  <a href="/" class="absolute top-20 left-4 bg-blue-500 text-white px-4 py-2 rounded">Back to Products</a>
+  <div>
+    <button  on:click={backButton} class="absolute top-20 left-4 bg-blue-500 text-white px-4 py-2 rounded">
+      Back to Products
+    </button>
+  </div>
+  
   {#if error}
     <div class="mt-28 text-red-500 text-xl font-bold">Error: {error}</div>
   {:else if loading}
