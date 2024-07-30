@@ -1,11 +1,13 @@
 <script>
   import { navigate } from "svelte-routing";
-
+  import Rating from "../Rating.svelte";
+  
   export let id, title, image, price, category, description, rating;
 
   function handleClick() {
     navigate(`/products/${id}`);
   }
+  
 </script>
 
 <div
@@ -22,7 +24,9 @@
             {title}
           </div>
         </h2>
+
       </header>
+      <Rating rating={rating.rate} />
       <div class="text-base line-clamp-2 font-extrabold text-slate-500 leading-snug">
         <h2>${price}</h2>
       </div>
