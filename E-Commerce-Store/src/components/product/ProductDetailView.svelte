@@ -26,25 +26,27 @@
     }
   }
 
-  function backButton(){
+  function backButton() {
     window.history.back();
   }
 </script>
 
-<div class="flex justify-center">
-  <div>
-    <button  on:click={backButton} class="absolute top-20 left-4 bg-blue-500 text-white px-4 py-2 rounded">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="absolute top-20 left-4 sm:left-6 lg:left-8">
+    <button on:click={backButton} class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition duration-300 ease-in-out">
       Back to Products
     </button>
   </div>
   
-  {#if error}
-    <div class="mt-28 text-red-500 text-xl font-bold">Error: {error}</div>
-  {:else if loading}
-    <ProductSkeleton />
-  {:else if product}
-    <ProductDetail {...product} />
-  {:else}
-    <div class="mt-28 text-red-500 text-xl font-bold">Product not found</div>
-  {/if}
+  <div class="mt-28 sm:mt-32">
+    {#if error}
+      <div class="text-red-500 text-xl font-bold text-center">{error}</div>
+    {:else if loading}
+      <ProductSkeleton />
+    {:else if product}
+      <ProductDetail {...product} />
+    {:else}
+      <div class="text-red-500 text-xl font-bold text-center">Product not found</div>
+    {/if}
+  </div>
 </div>

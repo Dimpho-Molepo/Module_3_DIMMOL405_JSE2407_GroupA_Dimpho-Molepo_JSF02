@@ -16,7 +16,7 @@
 >
   <img class="object-contain h-48 mt-3" src={image} alt={title} />
 
-  <div class="flex-1 flex flex-col p-6">
+  <div class="flex-1 flex flex-col p-4">
     <div class="flex-1">
       <header class="mb-2 flex-2">
         <h2 class="text-lg line-clamp-2 font-extrabold leading-snug">
@@ -28,7 +28,7 @@
       </header>
       <Rating rating={rating.rate} />
       <div class="text-base line-clamp-2 font-extrabold text-slate-500 leading-snug">
-        <h2>${price}</h2>
+        <h2>R{price}</h2>
       </div>
     </div>
 
