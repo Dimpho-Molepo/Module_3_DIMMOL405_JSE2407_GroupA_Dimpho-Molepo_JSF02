@@ -1,6 +1,10 @@
 import { writable, derived } from "svelte/store";
 import { filterSortStore } from "./DefaultSortFilter";
 
+/**
+ * Create a product store with methods for fetching products and categories
+ * @returns {Object} The product store object
+*/
 function createProductStore() {
   const { subscribe, update } = writable({
     products: [],
@@ -10,7 +14,15 @@ function createProductStore() {
   });
 
   return {
+    /**
+     * Subscribes to the store's updates
+     * @param {Function} callback The callback function to call when the store updates
+    */
     subscribe,
+    /**
+     * Fetches the list of products from the API
+     * @async
+    */
     fetchProducts: async () => {
       update((store) => ({ ...store, loading: true }));
       try {
@@ -27,6 +39,10 @@ function createProductStore() {
         update((store) => ({ ...store, loading: false, error: error.message }));
       }
     },
+    /**
+     * Fetches the list of categories from the API
+     * @async
+    */
     fetchCategories: async () => {
       try {
         const response = await fetch(
@@ -43,8 +59,16 @@ function createProductStore() {
   };
 }
 
+/**
+ * The product store instance
+ * @type {Object}
+*/
 export const productStore = createProductStore();
 
+/**
+ * A derived store that returns the filtered and sorted list of products
+ * @type {DerivedStore}
+*/
 export const filteredSortedProducts = derived(
   [productStore, filterSortStore],
   ([$productStore, $filterSortStore]) => {

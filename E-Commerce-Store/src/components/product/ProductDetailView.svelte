@@ -9,10 +9,17 @@
   let error = null;
   let loading = true;
 
+  /**
+   * Lifecycle function that runs when the component is mounted
+  */
   onMount(() => {
     fetchProduct(id);
   });
 
+  /**
+   * Async function to fetch a product by ID from the fake store API
+   * @param {number|string} productId - The ID of the product to fetch
+  */
   async function fetchProduct(productId) {
     loading = true;
     try {
@@ -26,6 +33,10 @@
     }
   }
 
+  /**
+   * Function to navigate back in the browser history
+   * @returns {void}
+   */
   function backButton() {
     window.history.back();
   }

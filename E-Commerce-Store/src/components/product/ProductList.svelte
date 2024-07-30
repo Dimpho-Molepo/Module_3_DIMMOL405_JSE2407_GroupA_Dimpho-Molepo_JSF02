@@ -4,6 +4,9 @@
   import CardSkeleton from "./CardSkeleton.svelte";
   import { productStore, filteredSortedProducts } from "../../store/ProductStore";
 
+  /**
+   * Lifecycle function that runs when the component is mounted
+  */
   onMount(() => {
     productStore.fetchProducts();
     productStore.fetchCategories();

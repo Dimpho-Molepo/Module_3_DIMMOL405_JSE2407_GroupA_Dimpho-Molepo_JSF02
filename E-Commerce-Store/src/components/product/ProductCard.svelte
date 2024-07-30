@@ -4,6 +4,10 @@
   
   export let id, title, image, price, category, description, rating;
 
+  /**
+   * Function to navigate to the product details page
+   * @returns {void}
+   */
   function handleClick() {
     navigate(`/products/${id}`);
   }

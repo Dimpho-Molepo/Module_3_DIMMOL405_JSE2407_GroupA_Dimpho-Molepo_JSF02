@@ -2,18 +2,36 @@
   import { productStore } from '../store/ProductStore';
   import { filterSortStore } from '../store/DefaultSortFilter';
 
+  /**
+   * Handles changes to the category filter
+   * @param {Event} event - The change event from the category filter input
+   * @returns {void}
+   */
   function handleCategoryChange(event) {
     filterSortStore.update(state => ({ ...state, selectedCategory: event.target.value }));
   }
 
+  /**
+   * Handles changes to the sort filter
+   * @param {Event} event - The change event from the sort filter input
+   * @returns {void}
+   */
   function handleSortChange(event) {
     filterSortStore.update(state => ({ ...state, selectedSort: event.target.value }));
   }
 
+  /**
+   * Resets the filters to their default state
+   * @returns {void}
+   */
   function resetFilters() {
     filterSortStore.set({ selectedCategory: '', selectedSort: '' });
   }
 
+  /**
+   * A reactive variable that gets the categories from the product store
+   * @type {Array}
+   */
   $: categories = $productStore.categories || [];
 </script>
   
