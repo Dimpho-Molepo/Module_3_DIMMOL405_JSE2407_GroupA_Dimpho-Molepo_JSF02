@@ -9,5 +9,5 @@
 <Router >
   <Header/>
   <Route path="/" component={Home}/>
-  <Route path="/:id" component={ProductDetailView}/>
+  <Route path="/products/:id" component={ProductDetailView}/>
 </Router>
